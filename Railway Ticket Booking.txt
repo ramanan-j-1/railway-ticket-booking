@@ -1,0 +1,110 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+
+public class RailwayTicketBooking {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int Sleeperseats    = 50;
+        int Acseats         = 25;
+        int Firstclassseats = 30;
+
+        ArrayList<String> sleeperWaitlist    = new ArrayList<>();
+        ArrayList<String> acWaitlist         = new ArrayList<>();
+        ArrayList<String> firstClassWaitlist = new ArrayList<>();
+
+        do {
+            System.out.println("-----WELCOME TO RAILWAY BOOKING-----");
+            System.out.println("Enter your name:");
+            String name = scan.nextLine();
+            System.out.println("Age:");
+            int age = scan.nextInt();
+            scan.nextLine();
+            System.out.println("From:");
+            String from = scan.nextLine();
+            System.out.println("To:");
+            String to = scan.nextLine();
+
+            System.out.println("---Enter your Class---");
+            System.out.println("1. Sleeper: $100, Seats Available: " + Sleeperseats);
+            System.out.println("2. AC: $150, Seats Available: " + Acseats);
+            System.out.println("3. First Class: $200, Seats Available: " + Firstclassseats);
+            System.out.println("Your Choice:");
+            int choice = scan.nextInt();
+            System.out.println("How Many Tickets:");
+            int ticket = scan.nextInt();
+            scan.nextLine();
+            if (ticket <= 0) {
+                System.out.println("Invalid ticket count");
+                continue;
+            }
+
+            int fare = 0;
+
+            switch (choice) {
+                case 1:
+                    if (ticket > Sleeperseats) {
+                        sleeperWaitlist.add(name);
+                        System.out.println("Sorry, only " + Sleeperseats + " Sleeper seats left.");
+                        System.out.println(name + ", you are WAITLISTED at position " + sleeperWaitlist.size());
+                        continue;
+                    }
+                    fare = 100 * ticket;
+                    Sleeperseats -= ticket;
+                    break;
+
+                case 2:
+                    if (ticket > Acseats) {
+                        acWaitlist.add(name);
+                        System.out.println("Sorry, only " + Acseats + " AC seats left.");
+                        System.out.println(name + ", you are WAITLISTED at position " + acWaitlist.size());
+                        continue;
+                    }
+                    fare = 150 * ticket;
+                    Acseats -= ticket;
+                    break;
+
+                case 3:
+                    if (ticket > Firstclassseats) {
+                        firstClassWaitlist.add(name);
+                        System.out.println("Sorry, only " + Firstclassseats + " First Class seats left.");
+                        System.out.println(name + ", you are WAITLISTED at position " + firstClassWaitlist.size());
+                        continue;
+                    }
+                    fare = 200 * ticket;
+                    Firstclassseats -= ticket;
+                    break;
+
+                default:
+                    System.out.println("INVALID OPTION");
+                    continue;
+            }
+
+            if (age < 5) {
+                fare = 0;
+            } else if (age > 60) {
+                fare -= 10 * ticket;
+            }
+
+            System.out.println("-------TICKET-------");
+            System.out.println("Passenger Name: " + name);
+            System.out.println("Age: " + age);
+            System.out.println("From: " + from + "  To: " + to);
+            if (choice == 1) System.out.println("Selected Choice: Sleeper");
+            else if (choice == 2) System.out.println("Selected Choice: AC");
+            else if (choice == 3) System.out.println("Selected Choice: FirstClass");
+            System.out.println("Ticket Fare: " + fare);
+            System.out.println("Booking Successful");
+
+            System.out.println("\n1.Book Again 2.Exit");
+            int ch = scan.nextInt();
+            scan.nextLine();
+            if (ch == 2) {
+                System.out.println("Thank you!");
+                break;
+            }
+
+        } while (true);
+
+        scan.close();
+    }
+}
